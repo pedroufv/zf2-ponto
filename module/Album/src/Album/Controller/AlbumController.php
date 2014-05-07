@@ -133,7 +133,7 @@ class AlbumController extends AbstractActionController
         }
  		
         // retorna variaveis para a visao
-        return new ViewModel( array(
+        return new ViewModel(array(
         		'id' 	=> $id,
 				'form' 	=> $form
         	)
@@ -142,29 +142,51 @@ class AlbumController extends AbstractActionController
  
     public function deleteAction()
     {
-        $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
+        // recupera um parametro
+    	$id = (int)$this->params('id');
+    	
+    	// se nao foi possivel recuperar o parametro
         if (!$id) {
+        	
+        	// redireciona para a lista de albuns
             return $this->redirect()->toRoute('album');
         }
- 
+ 		
+        // recupera a requisicao
         $request = $this->getRequest();
+        
+        // verifica se a requisicao eh via post
         if ($request->isPost()) {
+        	
+        	// recupera a opcao de remocao
             $del = $request->getPost()->get('del', 'No');
+            
+            // se a opcao de remocao for 'Yes'
             if ($del == 'Yes') {
-                $id = (int)$request->getPost()->get('id');
+
+            	// recupera as informacoes do album com o parametro passado
                 $album = $this->getEntityManager()->find('Album\Entity\Album', $id);
+                
+                // se o album existe
                 if ($album) {
+                	
+                	// prepara a instrucao de remoca
                     $this->getEntityManager()->remove($album);
+                    
+                    // executa a instrucao preparada
                     $this->getEntityManager()->flush();
                 }
             }
- 
+            
+            // redireciona para a lista de albuns
             return $this->redirect()->toRoute('album');
         }
  
-        return array(
-            'id' => $id,
-            'album' => $this->getEntityManager()->find('Album\Entity\Album', $id)
+        // retorna variaveis para a visao
+        return new ViewModel(array(
+        		'id' 	=> $id,
+        		'album' => $this->getEntityManager()->find('Album\Entity\Album', $id)
+        	)
         );
     }
 }
