@@ -1,0 +1,13 @@
+# desenvolvimento de um projeto com zf2 e doctrine
+<VirtualHost *:80>
+    ServerName zf2quickstart.desenvolvimento
+    DocumentRoot /var/www/desenvolvimento/zf2quickstart/public
+    SetEnv APPLICATION_ENV "development"
+    SetEnv PROJECT_ROOT "/var/www/desenvolvimento/zf2quickstart/"
+    <Directory /var/www/desenvolvimento/zf2quickstart/public>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
