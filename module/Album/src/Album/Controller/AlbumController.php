@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Doctrine\ORM\EntityManager; 
 use Album\Form\AlbumForm;
 use Album\Entity\Album;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
  
 class AlbumController extends AbstractActionController 
 {
@@ -29,64 +30,113 @@ class AlbumController extends AbstractActionController
     }
  
     public function indexAction()
-    {
+    {    
+    	// retorna variaveis para a visao
         return new ViewModel(array(
-            'albums' => $this->getEntityManager()->getRepository('Album\Entity\Album')->findAll()
-        ));
+            	'albums' => $this->getEntityManager()->getRepository('Album\Entity\Album')->findAll()
+        	)
+        );
     }
  
     public function addAction()
     {
+    	// cria um novo formulario
         $form = new AlbumForm();
+        
+        // define o hydrato para o formulario
+        $form->setHydrator(new DoctrineObject($this->getEntityManager(), 'Album\Entity\Album'));
+        
+        // altera um atributo do formulario
         $form->get('submit')->setAttribute('label', 'Add');
  
+        // recupera requisicao
         $request = $this->getRequest();
+        
+        // verifica se a requisicao eh um post
         if ($request->isPost()) {
-            $album = new Album();
- 
-            $form->setInputFilter($album->getInputFilter());
+        	
+            // instancia uma entidade album
+        	$album = new Album();
+            
+            // garante o objeto seja preenchido com valores validos
+            $form->bind($album);
+			
+            // preenche o formulario com valores enviados via post
             $form->setData($request->getPost());
+            
+            // verifica se os valores enviados para o formulario sao validos
             if ($form->isValid()) {
-                $album->populate($form->getData());
-                $this->getEntityManager()->persist($album);
-                $this->getEntityManager()->flush();
+            	
+            	// prepara a persistencia do objeto
+            	$this->getEntityManager()->persist($album);
+                
+            	// executa instrucao previamente preparada
+            	$this->getEntityManager()->flush();
  
-                // Redirect to list of albums
+                // redireciona para a lista de albuns
                 return $this->redirect()->toRoute('album');
             }
         }
- 
-        return array('form' => $form);
+ 		
+        // retorna variaveis para a visao
+        return new ViewModel(array('form' => $form));
     }
  
     public function editAction()
     {
-        $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
+        // recupera um parametro
+    	$id = (int)$this->params('id');
+
+    	// se nao foi possivel recuperar o parametro
         if (!$id) {
+        	
+        	// redireciona para add um novo album
             return $this->redirect()->toRoute('album', array('action'=>'add'));
         }
+        
+        // recupera no banco as informacoes do album pelo parametro passado 
         $album = $this->getEntityManager()->find('Album\Entity\Album', $id);
  
+        // instancia o formulario
         $form = new AlbumForm();
-        $form->setBindOnValidate(false);
-        $form->bind($album);
+        
+        // define o hydrato para o formulario
+        $form->setHydrator(new DoctrineObject($this->getEntityManager(), 'Album\Entity\Album'));
+
+        // altera um atributo do formulario
         $form->get('submit')->setAttribute('label', 'Edit');
- 
+
+        // garante o objeto seja preenchido com valores validos
+        $form->bind($album);
+        
+		// recupera requisicao
         $request = $this->getRequest();
+        
+        // verifica se a requisicao eh post
         if ($request->isPost()) {
+        	
+        	// preenche o formulario com as informacoes passadas no post
             $form->setData($request->getPost());
+            
+            // verifica se os valores passados no formulario sao validos
             if ($form->isValid()) {
-                $form->bindValues();
-                $this->getEntityManager()->flush();
+            	
+                // prepara a persistencia do objeto
+            	$this->getEntityManager()->persist($album);
+                
+                // executa instrucao previamente preparada
+            	$this->getEntityManager()->flush();
  
-                // Redirect to list of albums
+                // redireciona para a lista de albuns
                 return $this->redirect()->toRoute('album');
             }
         }
- 
-        return array(
-            'id' => $id,
-            'form' => $form,
+ 		
+        // retorna variaveis para a visao
+        return new ViewModel( array(
+        		'id' 	=> $id,
+				'form' 	=> $form
+        	)
         );
     }
  

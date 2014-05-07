@@ -2,15 +2,18 @@
 namespace Album\Form;
 
 use Zend\Form\Form;
+use Album\Form\Filter\AlbumFilter;
 
 class AlbumForm extends Form
 {
-    public function __construct($name = null)
+    public function __construct()
     {
-        // we want to ignore the name passed
-        parent::__construct('album');
+		parent::__construct('album');
+        
+        $inputFilter = new AlbumFilter();
         
         $this->setAttribute('method', 'post');
+        $this->setInputFilter($inputFilter->getinputFilter());
          
         $this->add(array(
             'name' => 'id',
