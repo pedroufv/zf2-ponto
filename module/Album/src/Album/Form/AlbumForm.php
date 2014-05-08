@@ -13,38 +13,47 @@ class AlbumForm extends Form
         $inputFilter = new AlbumFilter();
         
         $this->setAttribute('method', 'post');
+        
+        $this->setAttribute('role', 'form');
+		
+        // add filtro para os elemento
         $this->setInputFilter($inputFilter->getinputFilter());
          
         $this->add(array(
             'name' => 'id',
-            'attributes' => array(
-                'type'  => 'hidden',
-            ),
+            'type' => 'hidden'
         ));
+        
         $this->add(array(
-            'name' => 'artist',
+            'name' 		 => 'artist',
+        	'type'  	 => 'text',
             'attributes' => array(
-                'type'  => 'text',
+            	'class' 		=> 'form-control',
+            	'placeholder' 	=> 'Digite o nome do artista'
             ),
-            'options' => array(
-                'label' => 'Artist',
-            ),
+            'options' 	 => array(
+                'label' => 'Artist'
+            )
         ));
+        
         $this->add(array(
-            'name' => 'title',
-            'attributes' => array(
-                'type'  => 'text',
+            'name' 		 => 'title',
+        	'type' 		 => 'text',
+        	'attributes' => array(
+            	'class' 		=> 'form-control',
+            	'placeholder' 	=> 'Digite titulo do álbum'
             ),
-            'options' => array(
-                'label' => 'Title',
-            ),
+            'options'	 => array(
+                'label' => 'Title'
+            )
         ));
+        
         $this->add(array(
-            'name' => 'submit',
-            'attributes' => array(
-                'type'  => 'submit',
+            'name' 		 => 'submit',
+        	'type'  	 => 'submit',
+            'attributes' => array(                
                 'value' => 'Enviar',
-                'id' => 'submitbutton',
+            	'class' => 'btn btn-success'
             ),
         ));
     }

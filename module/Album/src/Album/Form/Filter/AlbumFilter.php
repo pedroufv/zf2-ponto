@@ -47,9 +47,22 @@ class AlbumFilter implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100
+                            'max'      => 100,
+                        	'messages' => array(
+                        		'stringLengthInvalid' 	=> 'A informação enviada não é um texto',
+                        		'stringLengthTooShort' 	=> 'O texto deve conter no mínimo %min% caracteres',
+                        		'stringLengthTooLong' 	=> 'O texto deve conter no máximo %max% caracteres'
+                        	)
                         )
-                    )
+                    ),
+                	array(
+		 				'name' => 'NotEmpty',
+		 				'options' => array(
+		 					'messages' => array(
+		 						'isEmpty' => 'Essa campo não pode ser vazio'
+		 					)
+		 				)
+	 				)
                 )
             )));
             
@@ -66,9 +79,22 @@ class AlbumFilter implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100
+                            'max'      => 100,
+                        	'messages' => array(
+                        		'stringLengthInvalid' 	=> 'A informação enviada não é um texto',
+                        		'stringLengthTooShort' 	=> 'O texto deve conter no mínimo %min% caracteres',
+                        		'stringLengthTooLong' 	=> 'O texto deve conter no máximo %max% caracteres'
+                        	)
                         )
-                    )
+                    ),
+                	array(
+		 				'name' => 'NotEmpty',
+		 				'options' => array(
+		 					'messages' => array(
+		 						'isEmpty' => 'Essa campo não pode ser vazio'
+		 					)
+		 				)
+	 				)
                 )
             )));
 
