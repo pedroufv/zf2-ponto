@@ -4,7 +4,7 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a class="btn btn-large btn-success" href="<?php echo $this->url('album', array('action'=>'add'));?>">Add novo album</a>
+    <a class="btn btn-large btn-success" href="<?php echo $this->url('album', array('controller' => 'album', 'action'=>'add'));?>">Add novo album</a>
 </p>
 
 <table class="table">
@@ -18,8 +18,8 @@ $this->headTitle($title);
     <td><?php echo $this->escapeHtml($album->getTitle());?></td>
     <td><?php echo $this->escapeHtml($album->getArtist());?></td>
     <td>
-        <a class="btn btn-xs btn-warning" href="<?php echo $this->url('album',array('action'=>'edit', 'id' => $album->getId()));?>"><span class="glyphicon glyphicon-edit"></a>
-        <a class="btn btn-xs btn-danger" href="<?php echo $this->url('album', array('action'=>'delete', 'id' => $album->getId()));?>"><span class="glyphicon glyphicon-floppy-remove"></a>
+        <a class="btn btn-xs btn-warning" href="<?php echo $this->url('album',array('controller' => 'album', 'action'=>'edit', 'id' => $album->getId()));?>"><span class="glyphicon glyphicon-edit"></a>
+        <a class="btn btn-xs btn-danger" href="<?php echo $this->url('album', array('controller' => 'album', 'action'=>'delete', 'id' => $album->getId()));?>"><span class="glyphicon glyphicon-floppy-remove"></a>
     </td>
 </tr>
 <?php endforeach; ?>

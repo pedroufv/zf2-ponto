@@ -23,3 +23,22 @@ $form->prepare();
 		<?php echo $this->formSubmit($form->get('submit')); ?>
 	</div>
 <?php echo $this->form()->closeTag(); ?>
+
+<?php if(count($tracks) > 0): ?>
+	<h2>Músicas</h2>
+	<table class="table">
+	<tr>
+	    <th>Título</th>
+	    <th>&nbsp;</th>
+	</tr>
+	<?php foreach($tracks as $track): ?>
+	<tr>
+	    <td><?php echo $this->escapeHtml($track->getTrackTitle());?></td>
+	    <td>
+	        <a class="btn btn-xs btn-warning" href="<?php echo $this->url('album',array('action'=>'edit-track', 'id' => $track->getTrackId()));?>"><span class="glyphicon glyphicon-edit"></a>
+	        <a class="btn btn-xs btn-danger" href="<?php echo $this->url('album', array('action'=>'delete-track', 'id' => $track->getTrackId()));?>"><span class="glyphicon glyphicon-floppy-remove"></a>
+	    </td>
+	</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif;?>
