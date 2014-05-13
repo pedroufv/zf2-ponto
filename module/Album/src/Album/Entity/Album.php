@@ -2,6 +2,7 @@
 
 namespace Album\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
