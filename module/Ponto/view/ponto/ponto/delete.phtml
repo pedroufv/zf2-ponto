@@ -1,0 +1,16 @@
+<?php
+$title = 'Deletar dia';
+$this->headTitle($title);
+?>
+<p>Você está certo que quer deletar esse dia? 
+  '<?php echo $this->escapeHtml($ponto->data); ?>'
+</p>
+<?php 
+$url = $this->url('ponto', array('action' => 'delete', 'id'=>$this->id)); ?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+  <input type="hidden" name="id" value="<?php echo (int)$ponto->id; ?>" />
+  <input type="submit" name="del" value="Yes" />
+  <input type="submit" name="del" value="No" />
+</div>
+</form>

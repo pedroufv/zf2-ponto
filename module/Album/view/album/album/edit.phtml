@@ -32,6 +32,8 @@ $form->prepare();
 	    <th>&nbsp;</th>
 	</tr>
 	<?php foreach($tracks as $track): ?>
+	<?php echo $track->getAlbum()->getTitle();?>
+	
 	<tr>
 	    <td><?php echo $this->escapeHtml($track->getTrackTitle());?></td>
 	    <td>

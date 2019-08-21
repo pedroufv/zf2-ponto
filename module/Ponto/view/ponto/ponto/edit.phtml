@@ -1,0 +1,19 @@
+<?php
+$title = 'Editar dia';
+$this->headTitle($title);
+?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', 
+    $this->url('ponto', array('action' => 'edit', 'id'=>$this->id)));
+$form->prepare();
+
+echo $this->form()->openTag($form) . PHP_EOL;
+echo $this->formHidden($form->get('id')) . PHP_EOL;
+echo $this->formRow($form->get('manha_ini')) . PHP_EOL;
+echo $this->formRow($form->get('manha_fim')) . PHP_EOL;
+echo $this->formRow($form->get('tarde_ini')) . PHP_EOL;
+echo $this->formRow($form->get('tarde_fim')) . PHP_EOL;
+echo $this->formRow($form->get('data')) . PHP_EOL;
+echo $this->formInput($form->get('submit')) . PHP_EOL;
+echo $this->form()->closeTag($form) . PHP_EOL;

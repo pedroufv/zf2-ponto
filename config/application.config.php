@@ -2,9 +2,10 @@
 return array(
     'modules' => array(
         'Application',
-		'DoctrineModule',
+	'DoctrineModule',
     	'DoctrineORMModule',
-    	'Album'
+    	'Album',
+    	'Ponto'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

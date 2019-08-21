@@ -1,0 +1,76 @@
+<?php
+setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");  
+date_default_timezone_set('America/Sao_Paulo'); 
+$title = 'Mês de '.strftime("%B");
+$this->headTitle($title);
+$total = 0;
+?>
+<div class="topo-table">
+    <a class="btn btn-success" href="<?php echo $this->url('ponto', array( 
+        'action'=>'add'));?>">Adicionar novo dia</a>
+        
+    <div class="btn-group">
+        <button class="btn">Ano</button>
+        <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right" style="min-width: 74px">
+            <?php for($i = 2013; $i <= 2020; ++$i): ?>
+                <li><a href="<?php echo $this->url('pontos', array( 
+        'ano'=>$i, 'mes' => 1));?>"><?php echo $i ?></a></li>
+            <?php endfor; ?>
+        </ul>
+    </div>
+    
+    <div class="btn-group">
+        <button class="btn">Mês</button>
+        <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right" style="min-width: 74px">
+            <?php for($i = 1; $i <= 12; ++$i): ?>
+                <li><a href="<?php echo $this->url('ponto', array( 
+        'action'=>'mes', 'id' => $i));?>"><?php echo $i ?></a></li>
+            <?php endfor; ?>
+        </ul>
+    </div>
+    
+    <div class="pull-right">
+        <strong>Saldo: </strong><?php echo $saldoTotal->saldo; ?>
+    </div>
+    
+</div>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Manha - Entrada</th>
+        <th>Manha - Saída</th>
+        <th>Tarde - Entrada</th>
+        <th>Tarde - Saída</th>
+        <th>Data</th>
+        <th>Horas trabalhadas</th>
+        <th>Saldo</th>
+        <th>Ações</th>
+    </tr>
+    <?php foreach($dias as $chave => $dia) : ?>
+    <?php  
+            $saldo = explode('-', $dia->saldo);
+            $class= ($dia->saldo < '00:00:00') ? 'red' : 'green' 
+    ?>
+    <tr>
+        <td><?php echo $chave;?></td>
+        <td><?php echo $this->escapeHtml($dia->manha_ini);?></td>
+        <td><?php echo $this->escapeHtml($dia->manha_fim);?></td>
+        <td><?php echo $this->escapeHtml($dia->tarde_ini);?></td>
+        <td><?php echo $this->escapeHtml($dia->tarde_fim);?></td>
+        <td><?php echo $this->escapeHtml($dia->data);?></td>
+        <td class="<?php echo $class; ?>">
+            <?php echo $this->escapeHtml($dia->horas_dia);?></td>
+        <td class="<?php echo $class; ?>" style="color:<?php echo $class; ?>">
+            <?php echo $this->escapeHtml($dia->saldo);?>
+        <td>
+            <a class="btn btn-mini btn-warning" href="<?php echo $this->url('ponto',
+                array('action'=>'edit', 'id' => $dia->id));?>">Edit</a>
+            <a class="btn btn-mini btn-danger" href="<?php echo $this->url('ponto',
+                array('action'=>'delete', 'id' => $dia->id));?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
